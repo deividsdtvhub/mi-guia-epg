@@ -1,0 +1,33 @@
+name: Generar EPG Automatico
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Se ejecuta cada 6 horas
+  workflow_dispatch:
+
+jobs:
+  build:
+  runs-on: ubuntu-latest
+
+  steps:
+  - name: Descargar archivos
+    uses: actions/checkout@v4
+
+  - name: Configurar Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: '20'
+
+  - name: Instalar dependencias
+    run: npm install
+
+  - name: Ejecutar generador
+    run: npm run grab
+
+  - name: Guardar cambios en el repositorio
+    run: |
+      git config --global user.name "github-actions[bot]"
+      git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      git add .
+      git commit -m "Actualización automática de EPG" || exit 0
+      git push
