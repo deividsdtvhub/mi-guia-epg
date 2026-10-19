@@ -1,0 +1,10 @@
+{
+  "name": "epg-generator",
+  "private": true,
+  "dependencies": {
+    "epg-grabber": "latest"
+  },
+  "scripts": {
+    "grab": "epg-grabber --channels channels.xml"
+  }
+}
